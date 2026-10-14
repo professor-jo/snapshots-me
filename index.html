@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snapshots.Me</title>
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script>
+      // Set the day/night theme before first paint (mirrors currentTheme() in src/theme.js).
+      (function () {
+        var theme;
+        try {
+          var saved = JSON.parse(localStorage.getItem('snapshots-theme'));
+          if (saved && Date.now() < saved.until) theme = saved.theme;
+        } catch (e) {}
+        if (!theme) {
+          var hour = new Date().getHours();
+          theme = hour >= 7 && hour < 19 ? 'light' : 'dark';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
