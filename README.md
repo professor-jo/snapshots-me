@@ -1,25 +1,26 @@
 # Snapshots.Me
 
-Personal Website showcasing my frontend work as well as my career timeline.
+Personal website showcasing my projects, tech stack, and career timeline, designed like a Jupyter notebook.
 
 <h2 align="center">
-  <a href="https://d3jo.github.io/Snapshots.Me/" target="_blank">
+  <a href="https://stalwart-peony-5ae5cd.netlify.app/" target="_blank">
     Click To Visit !
   </a>
 </h2>
 
+## Features
 
-<h2 align="center">Home Page</h2>
+- Notebook-style sections (`In [n]:` / `Out[n]:`) on a graph-paper background
+- Day and night themes that follow the visitor's local time, with a manual toggle
+- Career timeline, featured project preview, and project gallery
 
-<p align="center">
-  <img src="KakaoTalk_20250904_154529925.png" alt="Homepage preview" width="600">
-</p>
+## Built with
 
-<h2 align="center">Project Dumps</h2>
+React, Vite, Tailwind CSS, and Framer Motion. Deployed on Netlify.
 
-<p align="center">
-  <img src="KakaoTalk_20250904_154556516.png" alt="Project preview" width="600">
-</p>
+## Run locally
 
-
-
+```bash
+npm install
+npm run dev
+```
