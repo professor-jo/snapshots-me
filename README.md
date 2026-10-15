@@ -1,26 +1,30 @@
 # Snapshots.Me
 
-Personal website showcasing my projects, tech stack, and career timeline, designed like a Jupyter notebook.
+My personal website: who I am, what I've built, and where I've worked, designed like a Jupyter notebook.
 
-<h2 align="center">
-  <a href="https://stalwart-peony-5ae5cd.netlify.app/" target="_blank">
-    Click To Visit !
-  </a>
-</h2>
+<h3 align="center">
+  <a href="https://snapshotsme.netlify.app/" target="_blank">Visit the live site →</a>
+</h3>
 
-## Features
+## What's on it
 
-- Notebook-style sections (`In [n]:` / `Out[n]:`) on a graph-paper background
-- Day and night themes that follow the visitor's local time, with a manual toggle
-- Career timeline, featured project preview, and project gallery
+| Section | What you'll find |
+|---|---|
+| **About** | A short intro to me and my work in data science and agentic AI |
+| **Tech Stacks** | Languages, ML and data science libraries, and data engineering tools I use |
+| **Timeline** | My career and education, from Waterloo to Georgia Tech and CONPORTLAB |
+| **Featured Work** | [OverSees AI](https://overseesai.vercel.app), an AI-powered travel planning platform, with a live preview |
+| **Project Gallery** | CNN Dog Breed Classifier, California Real Estate Analytics, Sephora Product Intelligence, and this site |
+| **Contact** | Email, LinkedIn, and GitHub |
+
+## Design
+
+Every section is a notebook cell: an `In [n]:` line of code "runs" the section, and the heading is its `Out[n]:` output. The page sits on graph paper with a highlighter swipe behind my name.
+
+The site has a **day theme** (white paper, navy ink) and a **night theme** (navy paper, light ink). It picks one from the visitor's local time, switching at 7 AM and 7 PM, and the sun/moon button in the navbar switches it by hand. The layout adapts to phones, tablets, and desktops.
 
 ## Built with
 
-React, Vite, Tailwind CSS, and Framer Motion. Deployed on Netlify.
+React · Vite · Tailwind CSS · Framer Motion · IBM Plex Sans and Mono
 
-## Run locally
-
-```bash
-npm install
-npm run dev
-```
+Hosted on Netlify, which redeploys automatically on every push to `main`.
