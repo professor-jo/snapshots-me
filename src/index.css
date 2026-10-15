@@ -33,10 +33,10 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --lab-paper: 27 42 74;
-  --lab-surface: 35 53 92;
-  --lab-cell: 21 33 60;
-  --lab-line: 52 73 118;
+  --lab-paper: 14 22 41;      /* #0e1629 */
+  --lab-surface: 22 33 58;    /* #16213a */
+  --lab-cell: 9 15 30;        /* #090f1e */
+  --lab-line: 39 54 88;       /* #273658 */
   --lab-ink: 232 238 250;
   --lab-muted: 159 176 208;
   --lab-blue: 124 182 255;
@@ -45,10 +45,10 @@
   --lab-purple: 196 165 255;
   --lab-teal: 94 234 212;
   --lab-btn: 255 224 102;
-  --lab-onbtn: 27 42 74;
-  --lab-btnicon: 27 42 74;
+  --lab-onbtn: 14 22 41;
+  --lab-btnicon: 14 22 41;
   --lab-btnhover: 255 255 255;
-  --lab-grid: rgb(255 255 255 / 0.05);
+  --lab-grid: rgb(255 255 255 / 0.045);
   --lab-swipe: 0.35;
 }
 
