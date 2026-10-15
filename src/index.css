@@ -170,10 +170,10 @@ body {
 
 .tonearm {
   position: absolute;
-  top: 8px;
-  right: 10px;
-  width: 4px;
-  height: 78px;
+  top: 6px;
+  right: 7px;
+  width: 3px;
+  height: 58px;
   border-radius: 2px;
   background: linear-gradient(#c9d1df, #8f9aae);
   transform-origin: 50% 4px;
@@ -201,7 +201,7 @@ body {
   border-radius: 2px;
   background: #5b6478;
 }
-.tonearm-on { transform: rotate(24deg); }
+.tonearm-on { transform: rotate(22deg); }
 
 @media (prefers-reduced-motion: reduce) {
   .vinyl-spin, .vinyl-invite { animation: none; }

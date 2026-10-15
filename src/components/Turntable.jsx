@@ -119,7 +119,7 @@ const Turntable = () => {
             </button>
             {/* Panel stays mounted when closed so the music keeps playing */}
             <div
-                className={`w-[min(340px,calc(100vw-3rem))] rounded-lg border border-lab-line bg-lab-surface/95 backdrop-blur shadow-lg shadow-black/20 p-4 origin-top-left transition-all duration-300 ${
+                className={`w-[min(260px,calc(100vw-1.5rem))] rounded-lg border border-lab-line bg-lab-surface/95 backdrop-blur shadow-lg shadow-black/20 p-3 origin-top-left transition-all duration-300 ${
                     open ? 'opacity-100 scale-100' : 'pointer-events-none opacity-0 scale-95 -translate-y-2'
                 }`}
                 aria-hidden={!open}
@@ -139,11 +139,11 @@ const Turntable = () => {
                     </button>
                 </div>
 
-                <div className="flex items-center gap-4 mb-3">
+                <div className="flex items-center gap-3 mb-3">
                     {/* Turntable */}
-                    <div className="relative h-[112px] w-[124px] flex-shrink-0 rounded-md bg-lab-cell border border-lab-line">
-                        <div className="absolute left-2 top-2">
-                            <Vinyl size={96} spinning={playing} />
+                    <div className="relative h-[84px] w-[94px] flex-shrink-0 rounded-md bg-lab-cell border border-lab-line">
+                        <div className="absolute left-1.5 top-1.5">
+                            <Vinyl size={70} spinning={playing} />
                         </div>
                         <span
                             className={`tonearm ${playing ? 'tonearm-on' : ''}`}
@@ -153,14 +153,14 @@ const Turntable = () => {
 
                     <div className="min-w-0 flex flex-col gap-2">
                         <div>
-                            <p className="font-bold text-lab-ink leading-tight">Ajun’s favourites</p>
+                            <p className="text-sm font-bold text-lab-ink leading-tight">Ajun’s favourites</p>
                             <p className="font-mono text-xs text-lab-muted">
                                 {loading ? 'warming up the needle…' : playing ? 'now spinning' : 'on Spotify'}
                             </p>
                         </div>
                         <button
                             onClick={startPlayer}
-                            className="inline-flex w-fit items-center gap-2 rounded px-3 py-1.5 font-mono text-sm font-medium text-lab-onbtn bg-lab-btn hover:bg-lab-btnhover transition-colors"
+                            className="inline-flex w-fit items-center gap-1.5 rounded px-2.5 py-1 font-mono text-sm font-medium text-lab-onbtn bg-lab-btn hover:bg-lab-btnhover transition-colors"
                             tabIndex={open ? 0 : -1}
                         >
                             {playing ? <FiPause /> : <FiPlay />}
@@ -174,8 +174,8 @@ const Turntable = () => {
                 )}
 
                 <div ref={embedRef} className="overflow-hidden rounded-xl min-h-[152px] bg-lab-cell" />
-                <p className="mt-2 font-mono text-[11px] text-lab-muted">
-                    Full songs if you’re signed in to Spotify, 30-second previews otherwise.
+                <p className="mt-2 font-mono text-[10px] leading-snug text-lab-muted">
+                    Full songs when signed in to Spotify; otherwise 30-sec previews.
                 </p>
             </div>
 
