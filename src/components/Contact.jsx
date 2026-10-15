@@ -5,7 +5,7 @@ import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 const Contact = () => {
     return (
         <div className="w-full text-lab-ink pb-24">
-            <CellHeading n={7} code={<>me.contact()</>}>Get In Touch</CellHeading>
+            <CellHeading n={6} code={<>me.contact()</>}>Get In Touch</CellHeading>
             <div className="flex flex-col items-start gap-8 max-w-md">
                 <p className="text-xl text-lab-muted">
                     Whether you have a question, opportunity, or just want to say hi — my inbox is open.

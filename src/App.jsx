@@ -4,6 +4,7 @@ import About from './components/About';
 import Techstacks from './components/Techstacks';
 import Timeline from './components/Timeline';
 import FeaturedProject from './components/FeaturedProject';
+import QAProject from './components/QAProject';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import ScrollExtras from './components/ScrollExtras';
@@ -24,6 +25,7 @@ const App = () => {
                 <section id="timeline" className="scroll-mt-24"><Timeline /></section>
                 <section id="projects" className="scroll-mt-24">
                     <FeaturedProject />
+                    <QAProject />
                     <Projects />
                 </section>
                 <section id="contact" className="scroll-mt-24"><Contact /></section>

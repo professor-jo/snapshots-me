@@ -1,4 +1,3 @@
-import CellHeading from './CellHeading';
 import { motion } from 'framer-motion';
 import { FaGithub } from 'react-icons/fa';
 
@@ -37,7 +36,7 @@ const cardVariants = {
 const Projects = () => {
     return (
         <div className="w-full">
-            <CellHeading n={6} code={<>me.projects.all()</>}>Project Gallery</CellHeading>
+            <h3 className="mb-8 font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-lab-muted">More projects</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl pb-12">
                 {PROJECTS.map((project, index) => (
                     <motion.div

@@ -11,7 +11,7 @@ const FeaturedProject = () => {
 
     return (
         <section className="w-full pb-16">
-            <CellHeading n={5} code={<>me.projects.featured()</>}>Featured Work</CellHeading>
+            <CellHeading n={5} code={<>me.projects</>}>Projects</CellHeading>
 
             {/* Section header */}
             <motion.div
