@@ -68,7 +68,7 @@ const Navbar = () => {
     const [active, setActive] = useActiveSection();
 
     return (
-        <header className="sticky top-0 z-50 px-3 pt-5 pl-[76px] sm:pl-[100px] min-[1420px]:pl-3">
+        <header className="sticky top-0 z-50 px-3 pt-5 pr-[76px] sm:pr-[100px] min-[1420px]:pr-3">
             <nav className="mx-auto max-w-6xl rounded-lg border border-lab-line bg-lab-surface/85 backdrop-blur-xl shadow-sm shadow-lab-ink/5">
                 <div className="flex items-center justify-between gap-4 py-2.5 pl-3 pr-3">
                     <Logo />

@@ -102,7 +102,7 @@ const Turntable = () => {
     };
 
     return (
-        <div className="fixed left-3 top-[26px] sm:left-4 sm:top-4 z-[60] flex flex-col items-start gap-3">
+        <div className="fixed right-3 top-[26px] sm:right-4 sm:top-4 z-[60] flex flex-col items-end gap-3">
             {/* The record in the corner, always spinning */}
             <button
                 onClick={onDiscClick}
@@ -112,14 +112,14 @@ const Turntable = () => {
             >
                 <Vinyl className="h-11 w-11 sm:h-16 sm:w-16" labelClass="text-[6px] sm:text-[8px]" spinning />
                 {!playing && !open && (
-                    <span className="pointer-events-none absolute left-0 top-full mt-3 whitespace-nowrap rounded border border-lab-line bg-lab-surface px-2 py-1 font-mono text-xs text-lab-muted opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="pointer-events-none absolute right-0 top-full mt-3 whitespace-nowrap rounded border border-lab-line bg-lab-surface px-2 py-1 font-mono text-xs text-lab-muted opacity-0 transition-opacity group-hover:opacity-100">
                         play my music ♪
                     </span>
                 )}
             </button>
             {/* Panel stays mounted when closed so the music keeps playing */}
             <div
-                className={`w-[min(260px,calc(100vw-1.5rem))] rounded-lg border border-lab-line bg-lab-surface/95 backdrop-blur shadow-lg shadow-black/20 p-3 origin-top-left transition-all duration-300 ${
+                className={`w-[min(260px,calc(100vw-1.5rem))] rounded-lg border border-lab-line bg-lab-surface/95 backdrop-blur shadow-lg shadow-black/20 p-3 origin-top-right transition-all duration-300 ${
                     open ? 'opacity-100 scale-100' : 'pointer-events-none opacity-0 scale-95 -translate-y-2'
                 }`}
                 aria-hidden={!open}
