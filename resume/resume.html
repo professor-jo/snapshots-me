@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ajun Jo Resume</title>
+<style>
+  @page { size: Letter; margin: 0.42in 0.4in 0.35in 0.4in; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 11pt; line-height: 1.16; color: #000; }
+  a { color: #0645ad; text-decoration: underline; }
+
+  header { text-align: center; }
+  h1 { margin: 0 0 2pt; font-size: 27pt; font-weight: bold; color: #2f5f8f; line-height: 1.1; }
+  .tagline, .contact { font-size: 10pt; margin: 0; }
+  .contact { margin-top: 1pt; }
+
+  h2 { margin: 5pt 0 2pt; padding-bottom: 1pt; font-size: 11pt; font-weight: bold; color: #2e5f7e; border-bottom: 1px solid #000; }
+
+  .row { display: flex; justify-content: space-between; gap: 8pt; }
+  .tight { letter-spacing: -0.12pt; }
+  .row .date { white-space: nowrap; }
+  .entry { margin-bottom: 1pt; }
+  ul { margin: 0; padding-left: 0.5in; }
+  li { margin: 0 0 0.5pt; padding-left: 0.08in; }
+  .indent { padding-left: 0.7in; margin: 0; }
+  .summary { font-style: italic; margin: 0; }
+  .skills p { margin: 0; padding-left: 0.08in; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ajun Jo</h1>
+  <p class="tagline">Product Manager | M.S. Data Science, Georgia Tech | Statistics, University of Waterloo</p>
+  <p class="contact">Waterloo, Canada | 905 651 5768 | <a href="mailto:joajune03@gmail.com">joajune03@gmail.com</a> | <a href="https://snapshotsme.netlify.app/">Snapshots.Me</a> | <a href="https://github.com/d3jo?tab=repositories">GitHub</a> | <a href="https://www.linkedin.com/in/ajunjo/">LinkedIn</a></p>
+</header>
+
+<h2>EDUCATION</h2>
+<div class="row"><span><b>Georgia Institute of Technology</b> | <b>Master of Science in Analytics - Data Science</b></span><span class="date">Aug. 2026 – Present</span></div>
+<p class="indent"><b>Relevant Coursework :</b> Deep Learning, Big Data Analytics, Machine Learning for Trading, Financial Modeling</p>
+<div class="row tight"><span><b>University of Waterloo</b> | <b>Bachelor of Mathematics Honours Statistics Major</b> | <b>Computing Minor</b></span><span class="date">Sep. 2021 – Apr. 2026</span></div>
+<p class="indent"><b>Relevant Coursework :</b> Probability, Statistics, Software Development, Databases, Statistical Learning</p>
+<p class="indent"><b>Extracurriculars :</b> Semi-competitive Basketball league, Soccer Intramural (Placed first in league)</p>
+
+<h2>EXPERIENCE</h2>
+<div class="entry">
+  <div class="row"><span><b>Product Manager</b> | CONPORTLAB | Seoul, South Korea</span><span class="date">Aug. 2026 – Present</span></div>
+  <ul>
+    <li>Own requirements and delivery for <b>two industrial IoT initiatives</b> on CONPORTLAB’s no-code industrial automation platform, from product requirements through engineering, QA validation, and release</li>
+    <li>Designed an <b>industrial equipment monitoring</b> feature, defining PLC state models, operational metrics, event severity levels, notification logic, and partner-facing configuration workflows</li>
+    <li>Led <b>FEnet industrial protocol integration</b>, translating PLC connectivity and data acquisition needs into engineering specs for IP/port configuration, device addressing, data types, and polling intervals</li>
+    <li>Defined product KPIs and analyzed device telemetry and usage data to prioritize features and roadmap decisions</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="row"><span><b>Software QA Engineer</b> | People Inc. | New York, United States</span><span class="date">Sep. 2025 – May 2026</span></div>
+  <ul>
+    <li>Built a pull-request CD pipeline using Jenkins to generate deployable build artifacts, enabling Squadron-based preview environments for UI, API and database testing prior to merge.</li>
+    <li>Executed database API tests for a FastAPI service generator, validating PGVector and Milvus integrations across health, metadata, text, and vector search endpoints.</li>
+    <li>Identified and fixed a silent failure that allowed 400/500 errors to pass without warning messages, <b>reducing UI/UX errors by up to 80%.</b></li>
+    <li>Validated PostgreSQL schema by testing connectivity, schema creation and data retrieval flows via service APIs.</li>
+    <li>Streamlined the deployment pipeline by executing release cutting procedures, ensuring all approved pull requests were captured in the correct version artifact before production rollout.</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="row"><span><b>Data Analyst</b> | Scotiabank | Toronto, Canada</span><span class="date">Jan. 2025 – Apr. 2025</span></div>
+  <ul>
+    <li>Developed a time study tool that automated the collection of branch activity data from emails<b>, consolidated 100k+</b> records into a centralized dataset, and analyzed them to <b>identify the top 30 activities</b>, presenting the results through interactive dashboards in <b>Power BI and Tableau</b>.</li>
+    <li>Utilized <b>MySQL</b> aggregation queries to <b>extract KPIs</b> like frequency of branch tasks, time per activity and productivity by regions</li>
+    <li>Improved team performance by <b>up to 25%</b> by leading cross-functional team projects such as customizing time study tool for other internal teams enabling them to capture and assess daily productivity efficiency and patterns</li>
+    <li>Led multiple cross-functional time study projects, managing scope, timelines, and stakeholder coordination to deliver all project phases on schedule and support data-driven operational decisions</li>
+  </ul>
+</div>
+
+<h2>PROJECTS</h2>
+<div class="entry">
+  <div class="row"><span><b>California Real Estate Data Analytics</b> | <a href="https://github.com/d3jo/Real-Estate-Analysis">Github</a></span><span class="date">Jan. 2024</span></div>
+  <p class="summary"><b>Project Summary:</b> Python data analysis which provides visualizations and insights of real estate information in California.</p>
+  <ul>
+    <li>Utilized NumPy, Pandas, Matplotlib and Seaborn to analyze with <b>over 20,000 real estate listings</b></li>
+    <li>Data cleaned then visualized variable relationships using a correlation table to uncover key drivers of house prices</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="row"><span><b>Sephora Product Intelligence &amp; Machine Learning Analysis</b> | <a href="https://github.com/d3jo/sephora-sql-bi/tree/main">Github</a></span><span class="date">Aug. 2025 – Sep. 2025</span></div>
+  <p class="summary"><b>Project Summary:</b> Performed ETL process on product data, transforming raw datasets into BI dashboards and ML models</p>
+  <ul>
+    <li>Built a <b><i>PostgreSQL database (8k+ products)</i></b> to support scalable analysis and report a Power BI dashboard</li>
+    <li>Wrote SQL analyses to identify ROI drivers, hidden gems, and category-level pricing and promotion trends</li>
+    <li>Trained XGBoost models to classify high-potential products and predict ratings, likes, and launch popularity</li>
+  </ul>
+</div>
+
+<h2>SKILLS</h2>
+<div class="skills">
+  <p><b>Data Science:</b> Python, MySQL, R, Excel, Power BI, PySpark</p>
+  <p><b>Software Engineering:</b> Bash, Git, CI/CD, Jira</p>
+</div>
+</body>
+</html>
