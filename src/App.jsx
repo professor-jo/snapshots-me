@@ -8,6 +8,7 @@ import QAProject from './components/QAProject';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import ScrollExtras from './components/ScrollExtras';
+import Turntable from './components/Turntable';
 
 
 
@@ -16,6 +17,7 @@ const App = () => {
         <div className="text-lab-ink antialiased">
 
             <ScrollExtras />
+            <Turntable />
             <Navbar />
 
             <div className="mx-auto max-w-[calc(72rem+1.5rem)] px-3">
