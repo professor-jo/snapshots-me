@@ -20,10 +20,17 @@ const useActiveSection = () => {
     const [active, setActive] = useState('');
 
     useEffect(() => {
+        const root = document.getElementById('root');
+        if (!root) return;
+        let section = '';
+        const atBottom = () => root.scrollTop + root.clientHeight >= root.scrollHeight - 4;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) setActive(entry.target.id);
+                    if (entry.isIntersecting) {
+                        section = entry.target.id;
+                        setActive(atBottom() ? LINKS[LINKS.length - 1].id : section);
+                    }
                 });
             },
             { root: document.getElementById('root'), rootMargin: '-45% 0px -50% 0px' }
@@ -35,13 +42,11 @@ const useActiveSection = () => {
 
         // The last section is too short to reach the middle of the screen,
         // so treat reaching the bottom of the page as being on it.
-        const root = document.getElementById('root');
         const onScroll = () => {
-            if (root.scrollTop + root.clientHeight >= root.scrollHeight - 4) {
-                setActive(LINKS[LINKS.length - 1].id);
-            }
+            setActive(atBottom() ? LINKS[LINKS.length - 1].id : section);
         };
         root.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
 
         return () => {
             observer.disconnect();

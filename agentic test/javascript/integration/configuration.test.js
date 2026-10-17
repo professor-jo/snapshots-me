@@ -1,0 +1,10 @@
+import {readFileSync,existsSync,rmSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {spawnSync} from 'node:child_process';
+const repo=resolve(process.cwd(),'../..');
+const output=resolve(repo,'agentic test/javascript/build-output');
+afterAll(()=>rmSync(output,{recursive:true,force:true}));
+it('inactive constants import without undefined images',async()=>{const constants=await import('../../../src/constants/index.js');expect(constants.PROJECTS).toHaveLength(4);for(const project of constants.PROJECTS)expect(project.image).toBeNull();});
+it('root lint succeeds with checked-in configuration',()=>{const result=spawnSync('npm',['run','lint'],{cwd:repo,encoding:'utf8',timeout:60000});expect(result.status,`${result.stdout}\n${result.stderr}`).toBe(0);},70000);
+it.each(['/','/snapshots-me/'])('production build resolves assets and resume under %s',base=>{const directory=resolve(output,base==='/'?'root':'subpath');const result=spawnSync(process.execPath,[resolve(repo,'node_modules/vite/bin/vite.js'),'build','--outDir',directory,'--emptyOutDir'],{cwd:repo,encoding:'utf8',timeout:60000,env:{...process.env,BASE_PATH:base}});expect(result.status,`${result.stdout}\n${result.stderr}`).toBe(0);const html=readFileSync(resolve(directory,'index.html'),'utf8');expect(html).toContain(`src="${base}assets/`);expect(html).toContain(`href="${base}favicon.ico"`);expect(existsSync(resolve(directory,'Ajun Jo Resume.pdf'))).toBe(true);},70000);
+it('reduced-motion CSS disables decorative animations and transitions',()=>{const css=readFileSync(resolve(repo,'src/index.css'),'utf8');const reduced=css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));expect(reduced).toMatch(/\*, \*::before, \*::after\s*\{\s*animation:\s*none\s*!important;\s*transition:\s*none\s*!important/);expect(reduced).toMatch(/#root\s*\{\s*scroll-behavior:\s*auto/);});

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiGithub, FiRotateCcw, FiTerminal } from 'react-icons/fi';
+import PropTypes from '../utils/propTypes';
 
 const REPO_URL = 'https://github.com/professor-jo/qa-agentic-system';
 const COMMAND = 'qa_team https://github.com/you/my-app';
@@ -81,6 +82,12 @@ const Panel = ({ title, children, tone = 'border-[#2b3a5c]' }) => (
     </div>
 );
 
+Panel.propTypes = {
+    title: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
+    tone: PropTypes.string,
+};
+
 const StageRow = ({ stage, t }) => {
     const running = t >= stage.start && t < stage.end;
     const done = t >= stage.end;
@@ -101,6 +108,17 @@ const StageRow = ({ stage, t }) => {
             )}
         </div>
     );
+};
+
+StageRow.propTypes = {
+    stage: PropTypes.shape({
+        start: PropTypes.number.isRequired,
+        end: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        done: PropTypes.string.isRequired,
+        doing: PropTypes.string.isRequired,
+    }).isRequired,
+    t: PropTypes.number.isRequired,
 };
 
 const Terminal = () => {

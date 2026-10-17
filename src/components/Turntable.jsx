@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FiChevronUp, FiPause, FiPlay } from 'react-icons/fi';
+import PropTypes from '../utils/propTypes';
 
 // The playlist the record plays. From a link like open.spotify.com/playlist/<ID>, use <ID>.
 const PLAYLIST_ID = '2mGFdKJ4yVsrzHlb9ZDTCO';
@@ -7,14 +8,32 @@ const API_SRC = 'https://open.spotify.com/embed/iframe-api/v1';
 
 // Spotify's iFrame API loads only when a visitor first turns the record on.
 let apiPromise;
+let spotifyApi;
 const loadSpotifyApi = () => {
+    if (spotifyApi) return Promise.resolve(spotifyApi);
     if (!apiPromise) {
-        apiPromise = new Promise((resolve) => {
-            window.onSpotifyIframeApiReady = resolve;
+        apiPromise = new Promise((resolve, reject) => {
             const script = document.createElement('script');
+            const fail = () => {
+                clearTimeout(timer);
+                script.remove();
+                window.onSpotifyIframeApiReady = undefined;
+                reject(new Error('Spotify could not be loaded.'));
+            };
+            const timer = setTimeout(fail, 8000);
+            window.onSpotifyIframeApiReady = (api) => {
+                clearTimeout(timer);
+                script.onerror = null;
+                spotifyApi = api;
+                resolve(api);
+            };
             script.src = API_SRC;
             script.async = true;
+            script.onerror = fail;
             document.body.appendChild(script);
+        }).catch((error) => {
+            apiPromise = undefined;
+            throw error;
         });
     }
     return apiPromise;
@@ -34,17 +53,33 @@ const Vinyl = ({ size, className = '', labelClass = '', spinning }) => (
     </div>
 );
 
+Vinyl.propTypes = {
+    size: PropTypes.number,
+    className: PropTypes.string,
+    labelClass: PropTypes.string,
+    spinning: PropTypes.bool,
+};
+
 const Turntable = () => {
     const [open, setOpen] = useState(false);
     const [playing, setPlaying] = useState(false);
     const [loading, setLoading] = useState(false);
     const [needsTap, setNeedsTap] = useState(false);
     const [everPlayed, setEverPlayed] = useState(false);
+    const [error, setError] = useState(false);
     const controllerRef = useRef(null);
     const embedRef = useRef(null);
     const tapTimer = useRef(null);
+    const initTimer = useRef(null);
+    const operationRef = useRef(null);
 
-    useEffect(() => () => clearTimeout(tapTimer.current), []);
+    useEffect(() => () => {
+        operationRef.current = null;
+        clearTimeout(tapTimer.current);
+        clearTimeout(initTimer.current);
+        controllerRef.current?.destroy();
+        controllerRef.current = null;
+    }, []);
 
     // Browsers sometimes block audio started from outside the player; if nothing
     // plays shortly after a click, ask the visitor to press play in the player.
@@ -54,42 +89,71 @@ const Turntable = () => {
     };
 
     const startPlayer = async () => {
+        if (operationRef.current?.pending) return;
         if (controllerRef.current) {
             controllerRef.current.togglePlay();
             if (!playing) watchForBlockedPlay();
             return;
         }
-        setLoading(true);
-        // If Spotify is slow or blocked (e.g. by an ad blocker), stop showing the loading text.
-        setTimeout(() => {
+        const operation = { pending: true };
+        operationRef.current = operation;
+        const isCurrent = () => operationRef.current === operation;
+        const fail = () => {
+            if (!isCurrent()) return;
+            operationRef.current = null;
+            clearTimeout(initTimer.current);
+            clearTimeout(tapTimer.current);
+            controllerRef.current?.destroy();
+            controllerRef.current = null;
+            embedRef.current?.replaceChildren();
             setLoading(false);
-            if (!controllerRef.current) setNeedsTap(true);
-        }, 8000);
-        const IFrameAPI = await loadSpotifyApi();
-        // Spotify replaces the element it is given, so hand it a node React doesn't manage.
-        const target = document.createElement('div');
-        embedRef.current.appendChild(target);
-        IFrameAPI.createController(
-            target,
-            { uri: `spotify:playlist:${PLAYLIST_ID}`, width: '100%', height: 152 },
-            (controller) => {
-                controllerRef.current = controller;
-                controller.addListener('ready', () => {
-                    setLoading(false);
-                    controller.play();
-                    watchForBlockedPlay();
-                });
-                controller.addListener('playback_update', (e) => {
-                    const isPlaying = !e.data.isPaused;
-                    setPlaying(isPlaying);
-                    if (isPlaying) {
-                        setEverPlayed(true);
-                        clearTimeout(tapTimer.current);
-                        setNeedsTap(false);
+            setPlaying(false);
+            setNeedsTap(false);
+            setError(true);
+        };
+        setLoading(true);
+        setError(false);
+        setNeedsTap(false);
+        // Keep the existing eight-second limit, but allow a failed start to be retried.
+        initTimer.current = setTimeout(fail, 8000);
+        try {
+            const IFrameAPI = await loadSpotifyApi();
+            if (!isCurrent() || !embedRef.current) return;
+            // Spotify replaces the element it is given, so hand it a node React doesn't manage.
+            const target = document.createElement('div');
+            embedRef.current.appendChild(target);
+            IFrameAPI.createController(
+                target,
+                { uri: `spotify:playlist:${PLAYLIST_ID}`, width: '100%', height: 152 },
+                (controller) => {
+                    if (!isCurrent()) {
+                        controller.destroy();
+                        return;
                     }
-                });
-            }
-        );
+                    controllerRef.current = controller;
+                    controller.addListener('ready', () => {
+                        if (!isCurrent()) return;
+                        operation.pending = false;
+                        clearTimeout(initTimer.current);
+                        setLoading(false);
+                        controller.play();
+                        watchForBlockedPlay();
+                    });
+                    controller.addListener('playback_update', (e) => {
+                        if (!isCurrent()) return;
+                        const isPlaying = !e.data.isPaused;
+                        setPlaying(isPlaying);
+                        if (isPlaying) {
+                            setEverPlayed(true);
+                            clearTimeout(tapTimer.current);
+                            setNeedsTap(false);
+                        }
+                    });
+                }
+            );
+        } catch {
+            fail();
+        }
     };
 
     const onDiscClick = () => {
@@ -123,6 +187,7 @@ const Turntable = () => {
                     open ? 'opacity-100 scale-100' : 'pointer-events-none opacity-0 scale-95 -translate-y-2'
                 }`}
                 aria-hidden={!open}
+                inert={open ? undefined : ''}
             >
                 <div className="flex items-center justify-between mb-3">
                     <span className="font-mono text-xs text-lab-muted">
@@ -160,6 +225,7 @@ const Turntable = () => {
                         </div>
                         <button
                             onClick={startPlayer}
+                            disabled={loading}
                             className="inline-flex w-fit items-center gap-1.5 rounded px-2.5 py-1 font-mono text-sm font-medium text-lab-onbtn bg-lab-btn hover:bg-lab-btnhover transition-colors"
                             tabIndex={open ? 0 : -1}
                         >
@@ -169,6 +235,14 @@ const Turntable = () => {
                     </div>
                 </div>
 
+                {error && (
+                    <p role="alert" className="mb-2 font-mono text-xs text-lab-out">
+                        Spotify could not load. Press play to retry or{' '}
+                        <a href={`https://open.spotify.com/playlist/${PLAYLIST_ID}`} target="_blank" rel="noopener noreferrer" className="underline">
+                            open the playlist on Spotify
+                        </a>.
+                    </p>
+                )}
                 {needsTap && !playing && (
                     <p className="mb-2 font-mono text-xs text-lab-out">Press play in the Spotify player below to start.</p>
                 )}

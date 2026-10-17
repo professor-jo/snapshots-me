@@ -1,5 +1,4 @@
 import CellHeading from './CellHeading';
-import { motion } from 'framer-motion';
 import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const Contact = () => {

@@ -24,12 +24,19 @@ const nextSwitchTime = (now = new Date()) => {
     return next.getTime();
 };
 
+let memoryOverride = null;
+const isValidOverride = (saved) => saved &&
+    (saved.theme === 'light' || saved.theme === 'dark') &&
+    Number.isFinite(saved.until) && Date.now() < saved.until;
+
 const readOverride = () => {
+    if (isValidOverride(memoryOverride)) return memoryOverride.theme;
+    memoryOverride = null;
     try {
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (saved && Date.now() < saved.until) return saved.theme;
+        if (isValidOverride(saved)) return saved.theme;
     } catch {
-        // Storage can be blocked (private mode); fall back to the clock.
+        // Storage can be blocked (private mode); retain this visit's choice.
     }
     return null;
 };
@@ -37,10 +44,13 @@ const readOverride = () => {
 export const currentTheme = () => readOverride() || clockTheme();
 
 export const saveOverride = (theme) => {
+    if (theme !== 'light' && theme !== 'dark') return;
+    const saved = { theme, until: nextSwitchTime() };
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ theme, until: nextSwitchTime() }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        memoryOverride = null;
     } catch {
-        // Ignore: the choice still applies for this visit.
+        memoryOverride = saved;
     }
 };
 
