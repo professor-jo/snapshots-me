@@ -1,0 +1,9 @@
+import React from 'react';
+import {vi} from 'vitest';
+import {installStorage} from './storage.js';
+export const motionState={reduced:false,scroll:0.4,spring:0.3,scrollOptions:null,config:null};
+const tags=new Map();
+export const motionMock={motion:new Proxy({},{get(_,tag){if(!tags.has(tag))tags.set(tag,React.forwardRef(function Motion({children,initial,animate,exit,whileInView,viewport,transition,variants,layoutId,style,...props},ref){const clean={...style};delete clean.scaleX;return React.createElement(tag,{...props,ref,style:clean,...(style?.scaleX!==undefined?{'data-scale-x':style.scaleX}:{})},children);}));return tags.get(tag);}}),AnimatePresence:({children})=>children,MotionConfig:({children,reducedMotion})=>{motionState.config=reducedMotion;return children;},useReducedMotion:()=>motionState.reduced,useScroll:options=>{motionState.scrollOptions=options;return{scrollYProgress:motionState.scroll};},useSpring:()=>motionState.spring};
+export class Observer{static instances=[];constructor(callback,options){this.callback=callback;this.options=options;this.observe=vi.fn();this.disconnect=vi.fn();Observer.instances.push(this);}emit(entries){this.callback(entries);}}
+export function installBrowser({reduced=false}={}){Observer.instances=[];installStorage();vi.stubGlobal('IntersectionObserver',Observer);vi.stubGlobal('matchMedia',vi.fn(query=>({matches:reduced&&query.includes('prefers-reduced-motion'),media:query,addListener:vi.fn(),removeListener:vi.fn(),addEventListener:vi.fn(),removeEventListener:vi.fn()})));motionState.reduced=reduced;}
+export function rootAt(top=0){const root=document.createElement('div');root.id='root';Object.defineProperties(root,{scrollTop:{value:top,writable:true},clientHeight:{value:800,configurable:true},scrollHeight:{value:3000,configurable:true}});root.scrollTo=vi.fn();document.body.append(root);return root;}

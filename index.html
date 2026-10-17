@@ -14,7 +14,8 @@
         var theme;
         try {
           var saved = JSON.parse(localStorage.getItem('snapshots-theme'));
-          if (saved && Date.now() < saved.until) theme = saved.theme;
+          if (saved && (saved.theme === 'light' || saved.theme === 'dark') &&
+              Number.isFinite(saved.until) && Date.now() < saved.until) theme = saved.theme;
         } catch (e) {}
         if (!theme) {
           var hour = new Date().getHours();

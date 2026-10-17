@@ -1,3 +1,4 @@
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -14,13 +15,14 @@ import Turntable from './components/Turntable';
 
 const App = () => {
     return (
+        <MotionConfig reducedMotion="user">
         <div className="text-lab-ink antialiased">
 
             <ScrollExtras />
             <Turntable />
             <Navbar />
 
-            <div className="mx-auto max-w-[calc(72rem+1.5rem)] px-3">
+            <main className="mx-auto max-w-[calc(72rem+1.5rem)] px-3">
                 <section id="home" className="scroll-mt-24"><Hero /></section>
                 <section id="about" className="scroll-mt-24"><About /></section>
                 <section id="stack" className="scroll-mt-24"><Techstacks /></section>
@@ -31,8 +33,9 @@ const App = () => {
                     <Projects />
                 </section>
                 <section id="contact" className="scroll-mt-24"><Contact /></section>
-            </div>
+            </main>
         </div>
+        </MotionConfig>
     );
 };
 

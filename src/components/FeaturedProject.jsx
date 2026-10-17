@@ -1,5 +1,5 @@
 import CellHeading from './CellHeading';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiExternalLink, FiGlobe } from 'react-icons/fi';
 import { MdFlightTakeoff } from 'react-icons/md';
@@ -8,6 +8,19 @@ const SITE_URL = 'https://overseesai.vercel.app';
 
 const FeaturedProject = () => {
     const [iframeBlocked, setIframeBlocked] = useState(false);
+    const iframeRef = useRef(null);
+
+    useEffect(() => {
+        const iframe = iframeRef.current;
+        if (!iframe) return;
+
+        const handleError = () => setIframeBlocked(true);
+        iframe.addEventListener('error', handleError);
+
+        return () => {
+            iframe.removeEventListener('error', handleError);
+        };
+    }, []);
 
     return (
         <section className="w-full pb-16">
@@ -74,6 +87,13 @@ const FeaturedProject = () => {
                     </div>
                 </div>
 
+                <p className="mx-6 mb-3 text-sm text-lab-muted">
+                    If the embedded preview is unavailable,{' '}
+                    <a href={SITE_URL} target="_blank" rel="noopener noreferrer" className="text-lab-blue underline underline-offset-2">
+                        open OverSees AI in a new tab
+                    </a>.
+                </p>
+
                 {/* Browser chrome + iframe */}
                 <div className="mx-6 mb-6 rounded overflow-hidden border border-lab-line">
                     {/* Browser chrome bar */}
@@ -112,11 +132,11 @@ const FeaturedProject = () => {
                     ) : (
                         <div className="relative">
                             <iframe
+                                ref={iframeRef}
                                 src={SITE_URL}
                                 title="OverSees AI"
                                 className="w-full h-[480px] border-0 bg-white"
                                 loading="lazy"
-                                onError={() => setIframeBlocked(true)}
                             />
                             {/* Transparent click-through overlay that opens the site */}
                             <a

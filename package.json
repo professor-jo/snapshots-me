@@ -9,7 +9,7 @@
     "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --config Snapshots.Me/.eslintrc.cjs --ext js,jsx --ignore-pattern \"agentic test/**\" --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "vite"
   },

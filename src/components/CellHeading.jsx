@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import PropTypes from '../utils/propTypes';
 
 // Section heading styled as a notebook cell: an "In [n]:" prompt with the code that
 // "runs" the section, followed by the title as its output.
@@ -15,8 +16,14 @@ const CellHeading = ({ n, code, children }) => (
             {code}
         </code>
         <span className="font-mono text-sm text-lab-out pt-3 whitespace-nowrap">Out[{n}]:</span>
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-lab-ink">{children}</h1>
+        <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-lab-ink">{children}</h2>
     </motion.div>
 );
+
+CellHeading.propTypes = {
+    n: PropTypes.number.isRequired,
+    code: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
+};
 
 export default CellHeading;
